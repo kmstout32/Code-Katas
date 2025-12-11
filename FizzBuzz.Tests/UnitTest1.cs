@@ -2,53 +2,48 @@
 
 public class FizzBuzzTests
 {
-    // Numbers divisible by 3 only
-    [TestCase(3)]
-    [TestCase(6)]
-    [TestCase(9)]
-    [TestCase(12)]
-    [TestCase(99)]
-    // Numbers divisible by 5 only
-    [TestCase(5)]
-    [TestCase(10)]
-    [TestCase(20)]
-    [TestCase(25)]
-    [TestCase(100)]
-    // Numbers divisible by both 3 and 5
-    [TestCase(15)]
-    [TestCase(30)]
-    [TestCase(45)]
-    [TestCase(60)]
-    [TestCase(90)]
-    // Numbers not divisible by 3 or 5
-    [TestCase(1)]
-    [TestCase(2)]
-    [TestCase(4)]
-    [TestCase(7)]
-    [TestCase(8)]
-    [TestCase(11)]
-    [TestCase(97)]
-    // Edge cases
-    [TestCase(0)]
-    [TestCase(100)]
-    [TestCase(-3)]
-    [TestCase(-5)]
-    [TestCase(-1)]
-    [TestCase(101)]
+    //Numbers divisible by 3 only. should return "Fizz"
+    [TestCase(3, "Fizz")]
+    [TestCase(6, "Fizz")]
+    [TestCase(9, "Fizz")]
+    [TestCase(12, "Fizz")]
+    [TestCase(99, "Fizz")]
+    // Numbers divisible by 5. should return "Buzz"
+    [TestCase(5, "Buzz")]
+    [TestCase(10, "Buzz")]
+    [TestCase(20, "Buzz")]
+    [TestCase(25, "Buzz")]
+    [TestCase(100, "Buzz")]
+    //Numbers divisible by both 3 and 5.should return "FizzBuzz"
+    [TestCase(15, "FizzBuzz")]
+    [TestCase(30, "FizzBuzz")]
+    [TestCase(45, "FizzBuzz")]
+    [TestCase(60, "FizzBuzz")]
+    [TestCase(90, "FizzBuzz")]
+    //Numbers not divisible by 3 or 5. should return the number as a string
+    [TestCase(1, "1")]
+    [TestCase(2, "2")]
+    [TestCase(4, "4")]
+    [TestCase(7, "7")]
+    [TestCase(8, "8")]
+    [TestCase(11, "11")]
+    [TestCase(97, "97")]
+    //Negative and Edge cases
+    [TestCase(0, "FizzBuzz")]
+    [TestCase(-15, "FizzBuzz")]
+    [TestCase(-3, "Fizz")]
+    [TestCase(-5, "Buzz")]
+    [TestCase(-1, "-1")]
+    [TestCase(1000, "Buzz")]
+    [TestCase(999, "Fizz")]
+    [TestCase(1001, "1001")]
     [Test]
-    public void Convert_ReturnsExpectedResult(int input)
+    public void Convert_ReturnsExpectedResult(int input, string expected)
     {
-        // Arrange - compute expected value using two-boolean approach
-        bool isDivisibleBy3 = input % 3;
-        bool isDivisibleBy5 = input % 5;
-
-        string expected = "";
-        if (isDivisibleBy3) expected += "Fizz";
-        if (isDivisibleBy5) expected += "Buzz";
-        if (expected == "") expected = input.ToString();
-
+        // Act
         string result = FizzBuzz.Convert(input);
 
+        // Assert
         Assert.That(result, Is.EqualTo(expected));
     }
 }
