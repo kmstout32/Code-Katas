@@ -33,6 +33,19 @@ public class FizzBuzz
         return result;
     }
 
+    /* ALTERNATIVE: Shorter version using ternary operators (5 lines)
+     * ===============================================================
+     * public static string Convert(int number)
+     * {
+     *     bool isDivisibleBy3 = number % 3 == 0;
+     *     bool isDivisibleBy5 = number % 5 == 0;
+     *     string result = (isDivisibleBy3 ? "Fizz" : "") + (isDivisibleBy5 ? "Buzz" : "");
+     *     return result != "" ? result : number.ToString();
+     * }
+     *
+     * Ternary operator syntax: condition ? valueIfTrue : valueIfFalse
+     */
+
     // for 1 to 100
     public static void RunFizzBuzz()
     {
