@@ -2,35 +2,53 @@
 
 public class FizzBuzzTests
 {
+    // Numbers divisible by 3 only
+    [TestCase(3)]
+    [TestCase(6)]
+    [TestCase(9)]
+    [TestCase(12)]
+    [TestCase(99)]
+    // Numbers divisible by 5 only
+    [TestCase(5)]
+    [TestCase(10)]
+    [TestCase(20)]
+    [TestCase(25)]
+    [TestCase(100)]
+    // Numbers divisible by both 3 and 5
+    [TestCase(15)]
+    [TestCase(30)]
+    [TestCase(45)]
+    [TestCase(60)]
+    [TestCase(90)]
+    // Numbers not divisible by 3 or 5
+    [TestCase(1)]
+    [TestCase(2)]
+    [TestCase(4)]
+    [TestCase(7)]
+    [TestCase(8)]
+    [TestCase(11)]
+    [TestCase(97)]
+    // Edge cases
+    [TestCase(0)]
+    [TestCase(100)]
+    [TestCase(-3)]
+    [TestCase(-5)]
+    [TestCase(-1)]
+    [TestCase(101)]
     [Test]
-    public void Convert_NumberDivisibleBy3_ReturnsFizz()
+    public void Convert_ReturnsExpectedResult(int input)
     {
-        Assert.That(FizzBuzz.Convert(3), Is.EqualTo("Fizz"));
-        Assert.That(FizzBuzz.Convert(6), Is.EqualTo("Fizz"));
-        Assert.That(FizzBuzz.Convert(9), Is.EqualTo("Fizz"));
-    }
+        // Arrange - compute expected value using two-boolean approach
+        bool isDivisibleBy3 = input % 3;
+        bool isDivisibleBy5 = input % 5;
 
-    [Test]
-    public void Convert_NumberDivisibleBy5_ReturnsBuzz()
-    {
-        Assert.That(FizzBuzz.Convert(5), Is.EqualTo("Buzz"));
-        Assert.That(FizzBuzz.Convert(10), Is.EqualTo("Buzz"));
-        Assert.That(FizzBuzz.Convert(20), Is.EqualTo("Buzz"));
-    }
+        string expected = "";
+        if (isDivisibleBy3) expected += "Fizz";
+        if (isDivisibleBy5) expected += "Buzz";
+        if (expected == "") expected = input.ToString();
 
-    [Test]
-    public void Convert_NumberDivisibleBy15_ReturnsFizzBuzz()
-    {
-        Assert.That(FizzBuzz.Convert(15), Is.EqualTo("FizzBuzz"));
-        Assert.That(FizzBuzz.Convert(30), Is.EqualTo("FizzBuzz"));
-        Assert.That(FizzBuzz.Convert(45), Is.EqualTo("FizzBuzz"));
-    }
+        string result = FizzBuzz.Convert(input);
 
-    [Test]
-    public void Convert_NumberNotDivisibleBy3Or5_ReturnsNumber()
-    {
-        Assert.That(FizzBuzz.Convert(1), Is.EqualTo("1"));
-        Assert.That(FizzBuzz.Convert(2), Is.EqualTo("2"));
-        Assert.That(FizzBuzz.Convert(7), Is.EqualTo("7"));
+        Assert.That(result, Is.EqualTo(expected));
     }
 }
