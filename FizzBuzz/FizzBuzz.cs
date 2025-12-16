@@ -6,7 +6,7 @@ public class FizzBuzz
 {
     //CHALLLENGE: Implement the FizzBuzz logic as described below:
     //FOR number from 1 to 100:
-    //IF(number is divisible by 15) THEN
+    //IF(number is divisible by 3 and 5) THEN
     //    PRINT "FizzBuzz"
     // ELSE IF(number is divisible by 3) THEN
     //    PRINT "Fizz"
@@ -16,42 +16,44 @@ public class FizzBuzz
     // PRINT number
     public static string Convert(int number)
     {
-        bool isDivisibleBy3 = number % 3 == 0;
-        bool isDivisibleBy5 = number % 5 == 0;
+        bool divisibleBy3 = number % 3 == 0;
+        bool divisibleBy5 = number % 5 == 0;
 
         string result = "";
-
-        if (isDivisibleBy3)
-            result += "Fizz";
-
-        if (isDivisibleBy5)
-            result += "Buzz";
+        if (divisibleBy3 && divisibleBy5)
+        {
+            result = "FizzBuzz";
+        }
+        else if (divisibleBy3)
+        {
+            result = "Fizz";
+        }
+        else if (divisibleBy5)
+        {
+            result = "Buzz";
+        }
 
         if (result == "")
-            result = number.ToString();
+        {
+            if (number >= 1 && number <= 100)
+            {
+                result = number.ToString();
+            }
+            else
+            {
+                throw new ArgumentOutOfRangeException(nameof(number), "Number must be between 1 and 100");
+            }
+        }
 
         return result;
     }
-
-    /* ALTERNATIVE: Shorter version using ternary operators (5 lines)
-     * ===============================================================
-     * public static string Convert(int number)
-     * {
-     *     bool isDivisibleBy3 = number % 3 == 0;
-     *     bool isDivisibleBy5 = number % 5 == 0;
-     *     string result = (isDivisibleBy3 ? "Fizz" : "") + (isDivisibleBy5 ? "Buzz" : "");
-     *     return result != "" ? result : number.ToString();
-     * }
-     *
-     * Ternary operator syntax: condition ? valueIfTrue : valueIfFalse
-     */
 
     // for 1 to 100
     public static void RunFizzBuzz()
     {
         for (int i = 1; i <= 100; i++)
         {
-            // Reused Convert method for clean code
+        
             string result = Convert(i);
             Console.WriteLine(result);
         }
