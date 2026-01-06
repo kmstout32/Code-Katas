@@ -14,6 +14,8 @@ public class FizzBuzzTests
     //cases not divisible by 3 or 5. should return the number as a string
     [TestCase(1, "1")]
     [TestCase(7, "7")]
+    // Edge case: 0 is divisible by both 3 and 5
+    [TestCase(0, "FizzBuzz")]
     [Test]
     public void Convert_ReturnsExpectedResult(int input, string expected)
     {
@@ -25,7 +27,6 @@ public class FizzBuzzTests
     }
 
     // Test that numbers outside 1-100 range throw exceptions
-    [TestCase(0)]
     [TestCase(-1)]
     [TestCase(101)]
     [Test]
