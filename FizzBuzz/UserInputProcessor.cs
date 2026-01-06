@@ -2,68 +2,84 @@ namespace FizzBuzz;
 
 public class UserInputProcessor
 {
-    public static void ProcessUserInput()// Process user input of 5 comma-separated numbers
+    public enum ValidationResult
     {
-        Console.WriteLine("Please enter 5 numbers separated by commas between 1-100 (e.g., 3,15,7,20,5):");
+        Success,
+        NoInput,
+        InvalidFormat,
+        OutOfRange,
+        WrongCount
+    }
 
-        // ReadLine can return null, so we need to handle that case
-        string? nullableInput = Console.ReadLine();
-        if (nullableInput == null)
-        {
-            Console.WriteLine("Error: No input provided.");
-            return;
-        }
-
-        if (string.IsNullOrWhiteSpace(nullableInput))   // Check: empty or just whitespace
-        {
-            Console.WriteLine("Error: No input provided.");
-            return;
-        }
-
-        // Parse user input string into a list of integers
+    public static void ProcessUserInput(string? input)
+    {
+        ValidationResult validationResult = ValidationResult.Success;
         List<int> numbers = new List<int>();
 
-        try
+        // Check: null or empty input
+        if (input == null || string.IsNullOrWhiteSpace(input))
         {
-            string[] usersNumbers = nullableInput.Split(','); // Split input into an array
-
-            if (usersNumbers.Length != 5) // check for exactly 5 numbers
+            validationResult = ValidationResult.NoInput;
+        }
+        else
+        {
+            try
             {
-                Console.WriteLine("Error: You must enter exactly 5 numbers.");
-                return;
-            }
-            foreach (string usersNumber in usersNumbers) // Parse each user Number and add to the list
-            {
-                string trimmedNumber = usersNumber.Trim();
-                int number = int.Parse(trimmedNumber);
+                string[] numberStrings = input.Split(',');
 
-                // FIRST: Validate number is in the range 1-100
-                if (number < 1 || number > 100)
+                foreach (string numberString in numberStrings)
                 {
-                    Console.WriteLine("Error: Number must be between 1 and 100.");
-                    return;
+                    string trimmedNumber = numberString.Trim();
+                    int number = int.Parse(trimmedNumber);
+
+                    // FIRST: Validate number is in the range 1-100
+                    if (number < 1 || number > 100)
+                    {
+                        validationResult = ValidationResult.OutOfRange;
+                        break;
+                    }
+
+                    numbers.Add(number);
                 }
 
-                numbers.Add(number);
+                // Only check count if no range error was found
+                if (validationResult == ValidationResult.Success && numberStrings.Length != 5)
+                {
+                    validationResult = ValidationResult.WrongCount;
+                }
+            }
+            catch (FormatException)
+            {
+                validationResult = ValidationResult.InvalidFormat;
             }
         }
-        catch (FormatException)
-        {
-            Console.WriteLine("Error: Invalid input. Please enter only valid numbers separated by commas.");
-            return;
-        }
-        catch (OverflowException)
-        {
-            Console.WriteLine("Error: One or more numbers are too large.");
-            return;
-        }
 
-        // Process each number through FizzBuzz
-        Console.WriteLine("\nFizzBuzz Results:");
-        foreach (int number in numbers)
+        // Display result based on validation outcome
+        switch (validationResult)
         {
-            string result = FizzBuzz.Convert(number);
-            Console.WriteLine(number + " -> " + result);
+            case ValidationResult.Success:
+                Console.WriteLine("\nFizzBuzz Results:");
+                foreach (int number in numbers)
+                {
+                    string result = FizzBuzz.Convert(number);
+                    Console.WriteLine(number + " -> " + result);
+                }
+                break;
+            case ValidationResult.NoInput:
+                Console.WriteLine("Error: No input provided.");
+                break;
+            case ValidationResult.InvalidFormat:
+                Console.WriteLine("Error: Invalid number format detected. Please enter only whole numbers separated by commas (no letters, decimals, or special characters).");
+                break;
+            case ValidationResult.OutOfRange:
+                Console.WriteLine("Error: Number must be between 1 and 100.");
+                break;
+            case ValidationResult.WrongCount:
+                Console.WriteLine("Error: You must enter exactly 5 numbers.");
+                break;
+            default:
+                Console.WriteLine($"Error: An unexpected validation error occurred. ValidationResult: {validationResult}");
+                break;
         }
     }
 }
