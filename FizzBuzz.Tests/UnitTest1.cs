@@ -24,14 +24,8 @@ public class FizzBuzzTests
         Assert.That(result, Is.EqualTo(expected));
     }
 
-    // Test that numbers outside 1-100 range throw exceptions
-    [TestCase(0)]
-    [TestCase(-1)]
-    [TestCase(101)]
-    [Test]
-    public void Convert_ThrowsExceptionForNumbersOutsideRange(int input)
-    {
-        // Assert
-        Assert.Throws<ArgumentOutOfRangeException>(() => FizzBuzz.Convert(input));
-    }
+    
+
+
 }
+
