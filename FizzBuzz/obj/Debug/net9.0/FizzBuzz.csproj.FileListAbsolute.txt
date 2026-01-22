@@ -9,3 +9,7 @@ C:\Users\KiraStout\CodeKatas\csharp\kata_fizzbuzz\FizzBuzz\obj\Debug\net9.0\Fizz
 C:\Users\KiraStout\CodeKatas\csharp\kata_fizzbuzz\FizzBuzz\obj\Debug\net9.0\refint\FizzBuzz.dll
 C:\Users\KiraStout\CodeKatas\csharp\kata_fizzbuzz\FizzBuzz\obj\Debug\net9.0\FizzBuzz.pdb
 C:\Users\KiraStout\CodeKatas\csharp\kata_fizzbuzz\FizzBuzz\obj\Debug\net9.0\ref\FizzBuzz.dll
+C:\Users\KiraStout\CodeKatas\csharp\kata_fizzbuzz\FizzBuzz\obj\Debug\net9.0\FizzBuzz.sourcelink.json
+C:\Users\KiraStout\CodeKatas\csharp\kata_fizzbuzz\FizzBuzz\bin\Debug\net9.0\FizzBuzz.exe
+C:\Users\KiraStout\CodeKatas\csharp\kata_fizzbuzz\FizzBuzz\bin\Debug\net9.0\FizzBuzz.runtimeconfig.json
+C:\Users\KiraStout\CodeKatas\csharp\kata_fizzbuzz\FizzBuzz\obj\Debug\net9.0\FizzBuzz.genruntimeconfig.cache

@@ -1,39 +1,44 @@
-namespace FizzBuzz;
+using FizzBuzz.Validators;
 
-public class UserInputProcessor
+namespace FizzBuzz.Services;
+
+public class InputProcessorService
 {
-    private readonly IInputValidator _validator;
+    private readonly InputValidator _validator;
+    private readonly FizzBuzzConverterService _converter;
 
-    public UserInputProcessor(IInputValidator validator)
+
+    public InputProcessorService(InputValidator validator, FizzBuzzConverterService converter)
     {
         _validator = validator;
+        _converter = converter;
     }
 
-    public void ProcessUserInput(string? input)
+    public virtual void ProcessUserInput(string? input)
     {
-        IInputValidator.ValidationResult validationResult = _validator.Validate(input, out List<int> numbers);
+        InputValidator.ValidationResult validationResult = _validator.Validate(input, out List<int> numbers);
 
         // Display result based on validation outcome
         switch (validationResult)
         {
-            case IInputValidator.ValidationResult.Success:
+            case InputValidator.ValidationResult.Success:
                 Console.WriteLine("\nFizzBuzz Results:");
                 foreach (int number in numbers)
                 {
-                    string result = FizzBuzz.Convert(number);
+                    string result = _converter.Convert(number);
                     Console.WriteLine(number + " -> " + result);
                 }
                 break;
-            case IInputValidator.ValidationResult.NoInput:
+            case InputValidator.ValidationResult.NoInput:
                 Console.WriteLine("Error: No input provided.");
                 break;
-            case IInputValidator.ValidationResult.InvalidFormat:
+            case InputValidator.ValidationResult.InvalidFormat:
                 Console.WriteLine("Error: Invalid number format detected. Please enter only whole numbers separated by commas (no letters, decimals, or special characters).");
                 break;
-            case IInputValidator.ValidationResult.OutOfRange:
+            case InputValidator.ValidationResult.OutOfRange:
                 Console.WriteLine("Error: Number must be between 1 and 100.");
                 break;
-            case IInputValidator.ValidationResult.WrongCount:
+            case InputValidator.ValidationResult.WrongCount:
                 Console.WriteLine("Error: You must enter exactly 5 numbers.");
                 break;
             default:

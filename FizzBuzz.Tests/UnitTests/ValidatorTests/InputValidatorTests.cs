@@ -1,29 +1,6 @@
-﻿namespace FizzBuzz.Tests;
+using FizzBuzz.Validators;
 
-public class FizzBuzzTests
-{
-    //divisible by 3 only. should return "Fizz"
-    [TestCase(3, "Fizz")]
-    [TestCase(9, "Fizz")]
-    //divisible by 5 only. should return "Buzz"
-    [TestCase(5, "Buzz")]
-    [TestCase(10, "Buzz")]
-    //divisible by both 3 and 5. should return "FizzBuzz"
-    [TestCase(15, "FizzBuzz")]
-    [TestCase(30, "FizzBuzz")]
-    //cases not divisible by 3 or 5. should return the number as a string
-    [TestCase(1, "1")]
-    [TestCase(7, "7")]
-    [Test]
-    public void Convert_ReturnsExpectedResult(int input, string expected)
-    {
-        // Act
-        string result = FizzBuzz.Convert(input);
-
-        // Assert
-        Assert.That(result, Is.EqualTo(expected));
-    }
-}
+namespace FizzBuzz.Tests.UnitTests.ValidatorTests;
 
 public class InputValidatorTests
 {
@@ -38,14 +15,12 @@ public class InputValidatorTests
     [Test]
     public void Validate_ReturnsSuccess_ForValidInput()
     {
-        // Arrange
+
         string input = "1,2,3,4,5";
 
-        // Act
         var result = _validator.Validate(input, out List<int> numbers);
 
-        // Assert
-        Assert.That(result, Is.EqualTo(IInputValidator.ValidationResult.Success));
+        Assert.That(result, Is.EqualTo(InputValidator.ValidationResult.Success));
         Assert.That(numbers, Is.EqualTo(new List<int> { 1, 2, 3, 4, 5 }));
     }
 
@@ -55,11 +30,9 @@ public class InputValidatorTests
     [Test]
     public void Validate_ReturnsNoInput_ForNullOrEmptyInput(string? input)
     {
-        // Act
         var result = _validator.Validate(input, out List<int> numbers);
 
-        // Assert
-        Assert.That(result, Is.EqualTo(IInputValidator.ValidationResult.NoInput));
+        Assert.That(result, Is.EqualTo(InputValidator.ValidationResult.NoInput));
         Assert.That(numbers, Is.Empty);
     }
 
@@ -69,11 +42,10 @@ public class InputValidatorTests
     [Test]
     public void Validate_ReturnsInvalidFormat_ForNonNumericInput(string input)
     {
-        // Act
+    
         var result = _validator.Validate(input, out List<int> numbers);
 
-        // Assert
-        Assert.That(result, Is.EqualTo(IInputValidator.ValidationResult.InvalidFormat));
+        Assert.That(result, Is.EqualTo(InputValidator.ValidationResult.InvalidFormat));
     }
 
     [TestCase("0,2,3,4,5")]       // zero (below range)
@@ -87,7 +59,7 @@ public class InputValidatorTests
         var result = _validator.Validate(input, out List<int> numbers);
 
         // Assert
-        Assert.That(result, Is.EqualTo(IInputValidator.ValidationResult.OutOfRange));
+        Assert.That(result, Is.EqualTo(InputValidator.ValidationResult.OutOfRange));
     }
 
     [TestCase("1,2,3,4")]         // too few (4 numbers)
@@ -100,20 +72,16 @@ public class InputValidatorTests
         var result = _validator.Validate(input, out List<int> numbers);
 
         // Assert
-        Assert.That(result, Is.EqualTo(IInputValidator.ValidationResult.WrongCount));
+        Assert.That(result, Is.EqualTo(InputValidator.ValidationResult.WrongCount));
     }
 
     [Test]
-    public void Validate_ChecksRangeBeforeCount()
+    public void Validate_ChecksCountBeforeRange()
     {
-        // Arrange - 4 numbers, one out of range
         string input = "1,2,3,150";
 
-        // Act
         var result = _validator.Validate(input, out List<int> numbers);
 
-        // Assert - should return OutOfRange, not WrongCount
-        Assert.That(result, Is.EqualTo(IInputValidator.ValidationResult.OutOfRange));
+        Assert.That(result, Is.EqualTo(InputValidator.ValidationResult.WrongCount));
     }
 }
-
