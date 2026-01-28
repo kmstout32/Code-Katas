@@ -1,4 +1,5 @@
-﻿using FizzBuzz.Services;
+﻿using FizzBuzz.Models;
+using FizzBuzz.Services;
 using FizzBuzz.Validators;
 using Moq;  
 
@@ -29,71 +30,44 @@ public class MockInputProcessorService
             .Setup(validator => validator.Validate(It.IsAny<string>(), out expectedNumbers))
             .Returns(InputValidator.ValidationResult.Success);
 
-        _processor.ProcessUserInput("any input");
+        _mockFizzBuzzConverterService
+            .Setup(converter => converter.Convert(It.IsAny<int>()))
+            .Returns((int n) => n.ToString());
+
+        FizzBuzzModel result = _processor.ProcessUserInput("any input");
 
         _mockValidator
             .Verify(validator => validator.Validate(It.IsAny<string>(), out expectedNumbers), Times.Once);
         _mockFizzBuzzConverterService
-            .Verify(convertService => convertService.Convert(It.IsAny<int>()), Times.AtLeastOnce);
+            .Verify(convertService => convertService.Convert(It.IsAny<int>()), Times.Exactly(3));
+
+        Assert.That(result.ValidationResult, Is.EqualTo(InputValidator.ValidationResult.Success));
+        Assert.That(result.ConvertedResults, Has.Count.EqualTo(3));
+        Assert.That(result.IsSuccess, Is.True);
     }
 
+    [TestCase(InputValidator.ValidationResult.NoInput, null)]
+    [TestCase(InputValidator.ValidationResult.InvalidFormat, "abc,5,15,7,20")]
+    [TestCase(InputValidator.ValidationResult.OutOfRange, "3,5,150,7,20")]
+    [TestCase(InputValidator.ValidationResult.WrongCount, "3,5,15")]
     [Test]
-    public void InputProcessorService_Returns_NoInput()
+    public void InputProcessorService_Returns_ValidationError(
+        InputValidator.ValidationResult expectedValidationResult,
+        string? input)
     {
         List<int> expectedNumbers = new List<int>();
         _mockValidator
             .Setup(validator => validator.Validate(It.IsAny<string>(), out expectedNumbers))
-            .Returns(InputValidator.ValidationResult.NoInput);
+            .Returns(expectedValidationResult);
 
-        _processor.ProcessUserInput(null);
-
-        _mockValidator
-            .Verify(validator => validator.Validate(It.IsAny<string>(), out expectedNumbers), Times.Once);
-        _mockFizzBuzzConverterService.Verify(convertService => convertService.Convert(It.IsAny<int>()), Times.Never);
-    }
-
-    [Test]
-    public void InputProcessorService_Returns_InvalidFormat()
-    {
-        List<int> expectedNumbers = new List<int>();
-        _mockValidator
-            .Setup(validator => validator.Validate(It.IsAny<string>(), out expectedNumbers))
-            .Returns(InputValidator.ValidationResult.InvalidFormat);
-
-        _processor.ProcessUserInput("abc,5,15,7,20");
+        FizzBuzzModel result = _processor.ProcessUserInput(input);
 
         _mockValidator
             .Verify(validator => validator.Validate(It.IsAny<string>(), out expectedNumbers), Times.Once);
         _mockFizzBuzzConverterService.Verify(convertService => convertService.Convert(It.IsAny<int>()), Times.Never);
-    }
 
-    [Test]
-    public void InputProcessorService_Returns_OutOfRange()
-    {
-        List<int> expectedNumbers = new List<int>();
-        _mockValidator
-            .Setup(validator => validator.Validate(It.IsAny<string>(), out expectedNumbers))
-            .Returns(InputValidator.ValidationResult.OutOfRange);
-
-        _processor.ProcessUserInput("3,5,150,7,20");
-
-        _mockValidator
-            .Verify(validator => validator.Validate(It.IsAny<string>(), out expectedNumbers), Times.Once);
-        _mockFizzBuzzConverterService.Verify(convertService => convertService.Convert(It.IsAny<int>()), Times.Never);
-    }
-
-    [Test]
-    public void InputProcessorService_Returns_WrongCount()
-    {
-        List<int> expectedNumbers = new List<int>();
-        _mockValidator
-            .Setup(validator => validator.Validate(It.IsAny<string>(), out expectedNumbers))
-            .Returns(InputValidator.ValidationResult.WrongCount);
-
-        _processor.ProcessUserInput("3,5,15");
-
-        _mockValidator
-            .Verify(validator => validator.Validate(It.IsAny<string>(), out expectedNumbers), Times.Once);
-        _mockFizzBuzzConverterService.Verify(convertService => convertService.Convert(It.IsAny<int>()), Times.Never);
+        Assert.That(result.ValidationResult, Is.EqualTo(expectedValidationResult));
+        Assert.That(result.ConvertedResults, Is.Empty);
+        Assert.That(result.IsSuccess, Is.False);
     }
 }

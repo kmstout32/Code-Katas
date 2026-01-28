@@ -1,3 +1,4 @@
+using FizzBuzz.Models;
 using FizzBuzz.Validators;
 
 namespace FizzBuzz.Services;
@@ -14,36 +15,21 @@ public class InputProcessorService
         _converter = converter;
     }
 
-    public virtual void ProcessUserInput(string? input)
+    public virtual FizzBuzzModel ProcessUserInput(string? input)
     {
-        InputValidator.ValidationResult validationResult = _validator.Validate(input, out List<int> numbers);
+        FizzBuzzModel model = new FizzBuzzModel();
+        model.ValidationResult = _validator.Validate(input, out List<int> numbers);
+        model.Numbers = numbers;
 
-        // Display result based on validation outcome
-        switch (validationResult)
+        if (model.IsSuccess)
         {
-            case InputValidator.ValidationResult.Success:
-                Console.WriteLine("\nFizzBuzz Results:");
-                foreach (int number in numbers)
-                {
-                    string result = _converter.Convert(number);
-                    Console.WriteLine(number + " -> " + result);
-                }
-                break;
-            case InputValidator.ValidationResult.NoInput:
-                Console.WriteLine("Error: No input provided.");
-                break;
-            case InputValidator.ValidationResult.InvalidFormat:
-                Console.WriteLine("Error: Invalid number format detected. Please enter only whole numbers separated by commas (no letters, decimals, or special characters).");
-                break;
-            case InputValidator.ValidationResult.OutOfRange:
-                Console.WriteLine("Error: Number must be between 1 and 100.");
-                break;
-            case InputValidator.ValidationResult.WrongCount:
-                Console.WriteLine("Error: You must enter exactly 5 numbers.");
-                break;
-            default:
-                Console.WriteLine($"Error: An unexpected validation error occurred. ValidationResult: {validationResult}");
-                break;
+            foreach (int number in numbers)
+            {
+                string result = _converter.Convert(number);
+                model.ConvertedResults.Add(result);
+            }
         }
+
+        return model;
     }
 }

@@ -23,13 +23,14 @@ public class FizzBuzzConverterServiceTests
 
     [TestCase(1, "1")]
     [TestCase(7, "7")]
+    [TestCase(99, "Fizz")]
+    [TestCase(100, "Buzz")]  
     [Test]
     public void Convert_ReturnsExpectedResult(int input, string expected)
     {
-        // Act
+      
         string result = _converter.Convert(input);
 
-        // Assert
         Assert.That(result, Is.EqualTo(expected));
     }
 }

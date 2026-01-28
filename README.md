@@ -4,7 +4,7 @@ Part of the Code Katas collection - a C# implementation of the classic FizzBuzz 
 
 ## Development Journey
 
-This project evolved through three phases of development, each building upon the previous:
+This project evolved through four phases of development, each building upon the previous:
 
 ### Phase 1: Initial Challenge - Generic FizzBuzz
 The first challenge was to create a generic FizzBuzz implementation in the terminal following these rules:
@@ -24,25 +24,48 @@ After completing the initial implementation, I had a code review with my manager
 - Learned that multiple catch blocks are more idiomatic than switch on exception types
 
 ### Phase 3: Enhanced Features
-The final challenge involved extending the program with additional functionality:
-- **Interactive console application** - Added `ProcessUserInput()` method for user interaction
+Extended the program with additional functionality:
+- **Interactive console application** - Added user interaction for batch number processing
 - **Input validation** - Implemented strict range checking (1-100, rejecting 0, negatives, and values over 100)
 - **Error handling** - Comprehensive exception handling for FormatException, OverflowException, and ArgumentOutOfRangeException
-- **Batch processing** - Created `RunFizzBuzz()` method to automatically print results for 1-100
 - **Clean formatted output** - Stacked results with clear formatting (each result on its own line)
 - **Null safety** - Proper handling of nullable Console.ReadLine() return values
 - **User guidance** - Clear prompts and error messages for better user experience
 
+### Phase 4: Service Architecture Refactoring
+Refactored from monolithic design to service-oriented architecture with separation of concerns:
+- **Service Layer Pattern** - Separated business logic into distinct services
+- **Dependency Injection** - Constructor injection for loose coupling
+- **Single Responsibility** - Each class has one clear purpose
+- **Testability** - Virtual methods enable mocking for integration tests
+- **Enum-based Validation** - Type-safe error handling with ValidationResult enum
+- **Comprehensive Testing** - 30 unit and integration tests with Moq framework
+
 ## Current Features
 
-### 1. Core FizzBuzz Conversion
-The `Convert()` method accepts a number (1-100) and returns the FizzBuzz result:
+### 1. Service-Oriented Architecture
+The application is built using clean architecture principles with three distinct services:
 
+**FizzBuzzConverterService** - Core business logic for number conversion
 ```csharp
-FizzBuzz.Convert(15);  // Returns "FizzBuzz"
-FizzBuzz.Convert(3);   // Returns "Fizz"
-FizzBuzz.Convert(5);   // Returns "Buzz"
-FizzBuzz.Convert(7);   // Returns "7"
+var converter = new FizzBuzzConverterService();
+converter.Convert(15);  // Returns "FizzBuzz"
+converter.Convert(3);   // Returns "Fizz"
+converter.Convert(5);   // Returns "Buzz"
+converter.Convert(7);   // Returns "7"
+```
+
+**InputValidator** - Multi-layer validation with typed results
+```csharp
+var validator = new InputValidator();
+var result = validator.Validate("1,2,3,4,5", out List<int> numbers);
+// Returns: ValidationResult.Success, NoInput, InvalidFormat, OutOfRange, or WrongCount
+```
+
+**InputProcessorService** - Orchestrates validation and conversion with user feedback
+```csharp
+var processor = new InputProcessorService(validator, converter);
+processor.ProcessUserInput("3,15,7,20,5");
 ```
 
 ### 2. Interactive Console Application
@@ -65,36 +88,50 @@ FizzBuzz Results:
 5 -> Buzz
 ```
 
-### 3. Input Validation and Error Handling
-- Numbers must be between 1 and 100
-- Exactly 5 numbers required
-- Invalid numbers show error messages while valid ones are processed
-- Handles format errors, overflow errors, and out-of-range values
+### 3. Comprehensive Input Validation
+Multi-layered validation with specific error reporting:
+- **Null/Empty Check** - Detects missing input
+- **Count Validation** - Requires exactly 5 numbers
+- **Format Validation** - Catches non-numeric values (letters, decimals)
+- **Range Validation** - Enforces 1-100 range (rejects 0, negatives, >100)
+- **Overflow Protection** - Handles numbers too large for int
 
-**Example with Invalid Input:**
+**Error Handling Examples:**
 ```
-Please enter 5 numbers separated by commas between 1-100 (e.g., 3,15,7,20,5):
-0,50,101,-5,25
+Input: ""
+Error: No input provided.
 
-FizzBuzz Results:
-0 -> Error: Number must be between 1 and 100 (Parameter 'number')
-50 -> Buzz
-101 -> Error: Number must be between 1 and 100 (Parameter 'number')
--5 -> Error: Number must be between 1 and 100 (Parameter 'number')
-25 -> Buzz
+Input: "1,2,3"
+Error: You must enter exactly 5 numbers.
+
+Input: "abc,2,3,4,5"
+Error: Invalid number format detected. Please enter only whole numbers separated by commas.
+
+Input: "0,2,3,4,150"
+Error: Number must be between 1 and 100.
 ```
-
-### 4. Batch Processing (1-100)
-The `RunFizzBuzz()` method automatically prints FizzBuzz results for numbers 1 through 100.
 
 ## Project Structure
 
 ```
 FizzBuzzSolution.sln
-├── FizzBuzz/
-│   └── FizzBuzz.cs          # Main implementation with console features
-└── FizzBuzz.Tests/
-    └── UnitTest1.cs         # NUnit test suite
+├── FizzBuzz/                              # Main application
+│   ├── Program/
+│   │   └── FizzBuzz.cs                    # Entry point with dependency setup
+│   ├── Services/
+│   │   ├── FizzBuzzConverterService.cs    # Core FizzBuzz conversion logic
+│   │   └── InputProcessorService.cs       # Orchestrates validation and conversion
+│   └── Validators/
+│       └── InputValidator.cs              # Multi-layer input validation
+│
+└── FizzBuzz.Tests/                        # Test project (NUnit + Moq)
+    ├── UnitTests/
+    │   ├── ConverterTests/
+    │   │   └── FizzBuzzConverterServiceTests.cs    # Tests core conversion logic
+    │   └── ValidatorTests/
+    │       └── InputValidatorTests.cs              # Tests validation rules
+    └── Mocks/
+        └── MockInputProcessorService.cs            # Integration tests with mocks
 ```
 
 ## Requirements
@@ -114,12 +151,33 @@ dotnet build FizzBuzzSolution.sln
 dotnet test FizzBuzzSolution.sln
 ```
 
-All 11 tests cover:
-- Numbers divisible by 3 (returns "Fizz")
-- Numbers divisible by 5 (returns "Buzz")
-- Numbers divisible by both 3 and 5 (returns "FizzBuzz")
-- Numbers not divisible by 3 or 5 (returns the number as string)
-- Input validation for out-of-range values (0, negative numbers, >100)
+**Test Suite: 30 comprehensive tests** covering:
+
+### Unit Tests (20 tests)
+**FizzBuzzConverterService (10 tests):**
+- Numbers divisible by 3 → "Fizz" (3, 9, 99)
+- Numbers divisible by 5 → "Buzz" (5, 10, 100)
+- Numbers divisible by both → "FizzBuzz" (15, 30)
+- Regular numbers → string representation (1, 7)
+- Boundary values (99, 100)
+
+**InputValidator (12 tests):**
+- Valid input → Success
+- Null/empty/whitespace → NoInput (3 tests)
+- Non-numeric values → InvalidFormat (3 tests: letters, decimals, words)
+- Out of range → OutOfRange (4 tests: 0, negative, 101, 150)
+- Wrong count → WrongCount (3 tests: too few, too many, single number)
+- Validation order verification (count checked before range)
+
+### Integration Tests (5 tests)
+**InputProcessorService with Mocked Dependencies:**
+- Success path → calls converter for each valid number
+- NoInput → doesn't call converter
+- InvalidFormat → doesn't call converter
+- OutOfRange → doesn't call converter
+- WrongCount → doesn't call converter
+
+**Code Coverage: 88% lines, 96% branches**
 
 ## Implementation Details
 

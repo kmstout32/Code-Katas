@@ -1,4 +1,5 @@
-﻿using FizzBuzz.Services;
+﻿using FizzBuzz.Models;
+using FizzBuzz.Services;
 using FizzBuzz.Validators;
 
 namespace FizzBuzz.Program;
@@ -13,6 +14,20 @@ public class FizzBuzzApp
         InputValidator validator = new InputValidator();
         FizzBuzzConverterService converter = new FizzBuzzConverterService();
         InputProcessorService processor = new InputProcessorService(validator, converter);
-        processor.ProcessUserInput(input);
+
+        FizzBuzzModel result = processor.ProcessUserInput(input);
+
+        if (result.IsSuccess)
+        {
+            Console.WriteLine("\nFizzBuzz Results:");
+            for (int i = 0; i < result.Numbers.Count; i++)
+            {
+                Console.WriteLine($"{result.Numbers[i]} -> {result.ConvertedResults[i]}");
+            }
+        }
+        else
+        {
+            Console.WriteLine(result.GetErrorMessage());
+        }
     }
 }
