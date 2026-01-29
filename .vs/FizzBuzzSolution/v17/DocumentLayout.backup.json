@@ -1,0 +1,182 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\KiraStout\\CodeKatas\\csharp\\kata_fizzbuzz\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{E281A72F-0C3F-4D06-9775-F98209E0911F}|FizzBuzz.Api.Tests\\FizzBuzz.Api.Tests.csproj|c:\\users\\kirastout\\codekatas\\csharp\\kata_fizzbuzz\\fizzbuzz.api.tests\\unittest1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E281A72F-0C3F-4D06-9775-F98209E0911F}|FizzBuzz.Api.Tests\\FizzBuzz.Api.Tests.csproj|solutionrelative:fizzbuzz.api.tests\\unittest1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B66769C0-0928-4D15-B3A4-3D92DF00EFF0}|FizzBuzz\\FizzBuzz.csproj|c:\\users\\kirastout\\codekatas\\csharp\\kata_fizzbuzz\\fizzbuzz\\services\\fizzbuzzconverterservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B66769C0-0928-4D15-B3A4-3D92DF00EFF0}|FizzBuzz\\FizzBuzz.csproj|solutionrelative:fizzbuzz\\services\\fizzbuzzconverterservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B66769C0-0928-4D15-B3A4-3D92DF00EFF0}|FizzBuzz\\FizzBuzz.csproj|c:\\users\\kirastout\\codekatas\\csharp\\kata_fizzbuzz\\fizzbuzz\\models\\fizzbuzzmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B66769C0-0928-4D15-B3A4-3D92DF00EFF0}|FizzBuzz\\FizzBuzz.csproj|solutionrelative:fizzbuzz\\models\\fizzbuzzmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B66769C0-0928-4D15-B3A4-3D92DF00EFF0}|FizzBuzz\\FizzBuzz.csproj|c:\\users\\kirastout\\codekatas\\csharp\\kata_fizzbuzz\\fizzbuzz\\services\\inputprocessorservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B66769C0-0928-4D15-B3A4-3D92DF00EFF0}|FizzBuzz\\FizzBuzz.csproj|solutionrelative:fizzbuzz\\services\\inputprocessorservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B66769C0-0928-4D15-B3A4-3D92DF00EFF0}|FizzBuzz\\FizzBuzz.csproj|c:\\users\\kirastout\\codekatas\\csharp\\kata_fizzbuzz\\fizzbuzz\\program\\fizzbuzz.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B66769C0-0928-4D15-B3A4-3D92DF00EFF0}|FizzBuzz\\FizzBuzz.csproj|solutionrelative:fizzbuzz\\program\\fizzbuzz.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B66769C0-0928-4D15-B3A4-3D92DF00EFF0}|FizzBuzz\\FizzBuzz.csproj|c:\\users\\kirastout\\codekatas\\csharp\\kata_fizzbuzz\\fizzbuzz\\validators\\inputvalidator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B66769C0-0928-4D15-B3A4-3D92DF00EFF0}|FizzBuzz\\FizzBuzz.csproj|solutionrelative:fizzbuzz\\validators\\inputvalidator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{509B6C99-C10A-4AC9-8C4A-EC0086AC2B06}|FizzBuzz.Tests\\FizzBuzz.Tests.csproj|c:\\users\\kirastout\\codekatas\\csharp\\kata_fizzbuzz\\fizzbuzz.tests\\unittests\\validatortests\\inputvalidatortests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{509B6C99-C10A-4AC9-8C4A-EC0086AC2B06}|FizzBuzz.Tests\\FizzBuzz.Tests.csproj|solutionrelative:fizzbuzz.tests\\unittests\\validatortests\\inputvalidatortests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{509B6C99-C10A-4AC9-8C4A-EC0086AC2B06}|FizzBuzz.Tests\\FizzBuzz.Tests.csproj|c:\\users\\kirastout\\codekatas\\csharp\\kata_fizzbuzz\\fizzbuzz.tests\\unittests\\convertertests\\fizzbuzzconverterservicetests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{509B6C99-C10A-4AC9-8C4A-EC0086AC2B06}|FizzBuzz.Tests\\FizzBuzz.Tests.csproj|solutionrelative:fizzbuzz.tests\\unittests\\convertertests\\fizzbuzzconverterservicetests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 1,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedHeight": 163,
+          "SelectedChildIndex": -1,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{aa2115a1-9712-457b-9047-dbb71ca2cdd2}"
+            }
+          ]
+        },
+        {
+          "DockedHeight": 52,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "UnitTest1.cs",
+              "DocumentMoniker": "C:\\Users\\KiraStout\\CodeKatas\\csharp\\kata_fizzbuzz\\FizzBuzz.Api.Tests\\UnitTest1.cs",
+              "RelativeDocumentMoniker": "FizzBuzz.Api.Tests\\UnitTest1.cs",
+              "ToolTip": "C:\\Users\\KiraStout\\CodeKatas\\csharp\\kata_fizzbuzz\\FizzBuzz.Api.Tests\\UnitTest1.cs",
+              "RelativeToolTip": "FizzBuzz.Api.Tests\\UnitTest1.cs",
+              "ViewState": "AgIAAAUAAAAAAAAAAAAAwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-28T20:41:47.3Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "FizzBuzzModel.cs",
+              "DocumentMoniker": "C:\\Users\\KiraStout\\CodeKatas\\csharp\\kata_fizzbuzz\\FizzBuzz\\Models\\FizzBuzzModel.cs",
+              "RelativeDocumentMoniker": "FizzBuzz\\Models\\FizzBuzzModel.cs",
+              "ToolTip": "C:\\Users\\KiraStout\\CodeKatas\\csharp\\kata_fizzbuzz\\FizzBuzz\\Models\\FizzBuzzModel.cs",
+              "RelativeToolTip": "FizzBuzz\\Models\\FizzBuzzModel.cs",
+              "ViewState": "AgIAABQAAAAAAAAAAAAswBUAAABQAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-27T17:05:34.765Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "InputProcessorService.cs",
+              "DocumentMoniker": "C:\\Users\\KiraStout\\CodeKatas\\csharp\\kata_fizzbuzz\\FizzBuzz\\Services\\InputProcessorService.cs",
+              "RelativeDocumentMoniker": "FizzBuzz\\Services\\InputProcessorService.cs",
+              "ToolTip": "C:\\Users\\KiraStout\\CodeKatas\\csharp\\kata_fizzbuzz\\FizzBuzz\\Services\\InputProcessorService.cs",
+              "RelativeToolTip": "FizzBuzz\\Services\\InputProcessorService.cs",
+              "ViewState": "AgIAAAsAAAAAAAAAAAA7wBkAAAAgAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-20T19:15:05.14Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "FizzBuzz.cs",
+              "DocumentMoniker": "C:\\Users\\KiraStout\\CodeKatas\\csharp\\kata_fizzbuzz\\FizzBuzz\\Program\\FizzBuzz.cs",
+              "RelativeDocumentMoniker": "FizzBuzz\\Program\\FizzBuzz.cs",
+              "ToolTip": "C:\\Users\\KiraStout\\CodeKatas\\csharp\\kata_fizzbuzz\\FizzBuzz\\Program\\FizzBuzz.cs",
+              "RelativeToolTip": "FizzBuzz\\Program\\FizzBuzz.cs",
+              "ViewState": "AgIAABEAAAAAAAAAAAAgwBgAAAAiAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-26T20:47:44.864Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "FizzBuzzConverterService.cs",
+              "DocumentMoniker": "C:\\Users\\KiraStout\\CodeKatas\\csharp\\kata_fizzbuzz\\FizzBuzz\\Services\\FizzBuzzConverterService.cs",
+              "RelativeDocumentMoniker": "FizzBuzz\\Services\\FizzBuzzConverterService.cs",
+              "ToolTip": "C:\\Users\\KiraStout\\CodeKatas\\csharp\\kata_fizzbuzz\\FizzBuzz\\Services\\FizzBuzzConverterService.cs",
+              "RelativeToolTip": "FizzBuzz\\Services\\FizzBuzzConverterService.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAqwAQAAAAXAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-20T19:15:02.103Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "InputValidator.cs",
+              "DocumentMoniker": "C:\\Users\\KiraStout\\CodeKatas\\csharp\\kata_fizzbuzz\\FizzBuzz\\Validators\\InputValidator.cs",
+              "RelativeDocumentMoniker": "FizzBuzz\\Validators\\InputValidator.cs",
+              "ToolTip": "C:\\Users\\KiraStout\\CodeKatas\\csharp\\kata_fizzbuzz\\FizzBuzz\\Validators\\InputValidator.cs",
+              "RelativeToolTip": "FizzBuzz\\Validators\\InputValidator.cs",
+              "ViewState": "AgIAAAcAAAAAAAAAAAAQwBwAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-20T22:26:29.111Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "InputValidatorTests.cs",
+              "DocumentMoniker": "C:\\Users\\KiraStout\\CodeKatas\\csharp\\kata_fizzbuzz\\FizzBuzz.Tests\\UnitTests\\ValidatorTests\\InputValidatorTests.cs",
+              "RelativeDocumentMoniker": "FizzBuzz.Tests\\UnitTests\\ValidatorTests\\InputValidatorTests.cs",
+              "ToolTip": "C:\\Users\\KiraStout\\CodeKatas\\csharp\\kata_fizzbuzz\\FizzBuzz.Tests\\UnitTests\\ValidatorTests\\InputValidatorTests.cs",
+              "RelativeToolTip": "FizzBuzz.Tests\\UnitTests\\ValidatorTests\\InputValidatorTests.cs",
+              "ViewState": "AgIAAAgAAAAAAAAAAAAAwCoAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-20T20:01:15.542Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "FizzBuzzConverterServiceTests.cs",
+              "DocumentMoniker": "C:\\Users\\KiraStout\\CodeKatas\\csharp\\kata_fizzbuzz\\FizzBuzz.Tests\\UnitTests\\ConverterTests\\FizzBuzzConverterServiceTests.cs",
+              "RelativeDocumentMoniker": "FizzBuzz.Tests\\UnitTests\\ConverterTests\\FizzBuzzConverterServiceTests.cs",
+              "ToolTip": "C:\\Users\\KiraStout\\CodeKatas\\csharp\\kata_fizzbuzz\\FizzBuzz.Tests\\UnitTests\\ConverterTests\\FizzBuzzConverterServiceTests.cs",
+              "RelativeToolTip": "FizzBuzz.Tests\\UnitTests\\ConverterTests\\FizzBuzzConverterServiceTests.cs",
+              "ViewState": "AgIAABAAAAAAAAAAAAAYwB8AAAAVAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-26T19:48:17.144Z"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{34e76e81-ee4a-11d0-ae2e-00a0c90fffc3}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{d78612c7-9962-4b83-95d9-268046dad23a}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{e1b7d1f8-9b3c-49b1-8f4f-bfc63a88835d}"
+            }
+          ]
+        },
+        {
+          "DockedHeight": 52,
+          "SelectedChildIndex": -1,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:1:0:{d212f56b-c48a-434c-a121-1c5d80b59b9f}"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
