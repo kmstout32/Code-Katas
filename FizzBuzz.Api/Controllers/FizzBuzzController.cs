@@ -12,11 +12,16 @@ public class FizzBuzzController : ControllerBase
 {
     private readonly FizzBuzzConverterService _converterService;
     private readonly InputValidator _inputValidator;
+    private readonly ILogger<FizzBuzzController> _logger;
 
-    public FizzBuzzController(FizzBuzzConverterService converterService, InputValidator inputValidator)
+    public FizzBuzzController(
+        FizzBuzzConverterService converterService,
+        InputValidator inputValidator,
+        ILogger<FizzBuzzController> logger)
     {
         _converterService = converterService;
         _inputValidator = inputValidator;
+        _logger = logger;
     }
 
     [HttpGet("{number}")]
@@ -26,6 +31,8 @@ public class FizzBuzzController : ControllerBase
 
         if (validationResult != InputValidator.ValidationResult.Success)
         {
+            _logger.LogWarning("Validation failed for single number: {Number}, Result: {ValidationResult}",
+                number, validationResult);
             var model = new FizzBuzzModel { ValidationResult = validationResult };
             return BadRequest(new ErrorResponse { Error = model.GetErrorMessage() });
         }
@@ -41,6 +48,8 @@ public class FizzBuzzController : ControllerBase
 
         if (validationResult != InputValidator.ValidationResult.Success)
         {
+            _logger.LogWarning("Validation failed for batch request: Result: {ValidationResult}, Count: {Count}",
+                validationResult, request?.Numbers?.Length ?? 0);
             var model = new FizzBuzzModel { ValidationResult = validationResult };
             return BadRequest(new ErrorResponse { Error = model.GetErrorMessage() });
         }

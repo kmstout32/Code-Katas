@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using Moq;
 using FizzBuzz.Api.Controllers;
 using FizzBuzz.Api.Models;
@@ -12,6 +13,7 @@ public class FizzBuzzControllerTests
 {
     private Mock<FizzBuzzConverterService> _mockConverterService;
     private Mock<InputValidator> _mockValidator;
+    private Mock<ILogger<FizzBuzzController>> _mockLogger;
     private FizzBuzzController _controller;
 
     [SetUp]
@@ -19,7 +21,11 @@ public class FizzBuzzControllerTests
     {
         _mockConverterService = new Mock<FizzBuzzConverterService>();
         _mockValidator = new Mock<InputValidator>();
-        _controller = new FizzBuzzController(_mockConverterService.Object, _mockValidator.Object);
+        _mockLogger = new Mock<ILogger<FizzBuzzController>>();
+        _controller = new FizzBuzzController(
+            _mockConverterService.Object,
+            _mockValidator.Object,
+            _mockLogger.Object);
     }
 
     [Test]
