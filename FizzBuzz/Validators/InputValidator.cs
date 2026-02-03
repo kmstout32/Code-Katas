@@ -11,6 +11,42 @@ public class InputValidator
         WrongCount
     }
 
+    public virtual ValidationResult ValidateSingle(int number)
+    {
+        if (number < 1 || number > 100)
+        {
+            return ValidationResult.OutOfRange;
+        }
+
+        return ValidationResult.Success;
+    }
+
+    public virtual ValidationResult Validate(int[]? numbers, out List<int> validatedNumbers)
+    {
+        validatedNumbers = new List<int>();
+
+        if (numbers == null || numbers.Length == 0)
+        {
+            return ValidationResult.NoInput;
+        }
+
+        if (numbers.Length != 5)
+        {
+            return ValidationResult.WrongCount;
+        }
+
+        foreach (int number in numbers)
+        {
+            if (number < 1 || number > 100)
+            {
+                return ValidationResult.OutOfRange;
+            }
+            validatedNumbers.Add(number);
+        }
+
+        return ValidationResult.Success;
+    }
+
     public virtual ValidationResult Validate(string? input, out List<int> numbers)
     {
         numbers = new List<int>();

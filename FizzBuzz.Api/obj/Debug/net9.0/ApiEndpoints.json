@@ -1,0 +1,54 @@
+[
+  {
+    "ContainingType": "FizzBuzz.Api.Controllers.FizzBuzzController",
+    "Method": "ConvertBatch",
+    "RelativePath": "api/FizzBuzz",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "FizzBuzz.Api.Models.FizzBuzzBatchRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "FizzBuzz.Api.Models.FizzBuzzBatchResponse",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "FizzBuzz.Api.Controllers.FizzBuzzController",
+    "Method": "Convert",
+    "RelativePath": "api/FizzBuzz/{number}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "number",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "FizzBuzz.Api.Models.FizzBuzzResponse",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  }
+]
