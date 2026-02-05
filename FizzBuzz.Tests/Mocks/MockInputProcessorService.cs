@@ -60,7 +60,7 @@ public class MockInputProcessorService
             .Setup(validator => validator.Validate(It.IsAny<string>(), out expectedNumbers))
             .Returns(expectedValidationResult);
 
-        FizzBuzzModel result = _processor.ProcessUserInput(input);
+            FizzBuzzModel result = _processor.ProcessUserInput(input);
 
         _mockValidator
             .Verify(validator => validator.Validate(It.IsAny<string>(), out expectedNumbers), Times.Once);
