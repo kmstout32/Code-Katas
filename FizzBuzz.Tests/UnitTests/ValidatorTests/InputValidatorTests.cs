@@ -119,33 +119,24 @@ public class InputValidatorTests
     }
 
     [Test]
-    public void Validate_WithArray_ValidNumbers_ReturnsSuccess()
+    public void Validate_WithArrayAsString_ValidNumbers_ReturnsSuccess()
     {
         int[] numbers = { 1, 2, 3, 4, 5 };
+        string input = string.Join(",", numbers);
 
-        var result = _validator.Validate(numbers, out List<int> validatedNumbers);
+        var result = _validator.Validate(input, out List<int> validatedNumbers);
 
         Assert.That(result, Is.EqualTo(InputValidator.ValidationResult.Success));
         Assert.That(validatedNumbers, Is.EqualTo(new List<int> { 1, 2, 3, 4, 5 }));
     }
 
     [Test]
-    public void Validate_WithArray_NullArray_ReturnsNoInput()
-    {
-        int[]? numbers = null;
-
-        var result = _validator.Validate(numbers, out List<int> validatedNumbers);
-
-        Assert.That(result, Is.EqualTo(InputValidator.ValidationResult.NoInput));
-        Assert.That(validatedNumbers, Is.Empty);
-    }
-
-    [Test]
-    public void Validate_WithArray_EmptyArray_ReturnsNoInput()
+    public void Validate_WithArrayAsString_EmptyString_ReturnsNoInput()
     {
         int[] numbers = Array.Empty<int>();
+        string input = string.Join(",", numbers);
 
-        var result = _validator.Validate(numbers, out List<int> validatedNumbers);
+        var result = _validator.Validate(input, out List<int> validatedNumbers);
 
         Assert.That(result, Is.EqualTo(InputValidator.ValidationResult.NoInput));
         Assert.That(validatedNumbers, Is.Empty);
@@ -155,9 +146,11 @@ public class InputValidatorTests
     [TestCase(new int[] { 1, 2, 3, 4, 5, 6 })]
     [TestCase(new int[] { 1 })]
     [Test]
-    public void Validate_WithArray_WrongCount_ReturnsWrongCount(int[] numbers)
+    public void Validate_WithArrayAsString_WrongCount_ReturnsWrongCount(int[] numbers)
     {
-        var result = _validator.Validate(numbers, out List<int> validatedNumbers);
+        string input = string.Join(",", numbers);
+
+        var result = _validator.Validate(input, out List<int> validatedNumbers);
 
         Assert.That(result, Is.EqualTo(InputValidator.ValidationResult.WrongCount));
     }
@@ -166,9 +159,11 @@ public class InputValidatorTests
     [TestCase(new int[] { 1, 2, 3, 4, 101 })]
     [TestCase(new int[] { -1, 2, 3, 4, 5 })]
     [Test]
-    public void Validate_WithArray_OutOfRange_ReturnsOutOfRange(int[] numbers)
+    public void Validate_WithArrayAsString_OutOfRange_ReturnsOutOfRange(int[] numbers)
     {
-        var result = _validator.Validate(numbers, out List<int> validatedNumbers);
+        string input = string.Join(",", numbers);
+
+        var result = _validator.Validate(input, out List<int> validatedNumbers);
 
         Assert.That(result, Is.EqualTo(InputValidator.ValidationResult.OutOfRange));
     }

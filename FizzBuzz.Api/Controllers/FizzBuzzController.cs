@@ -10,19 +10,25 @@ namespace FizzBuzz.Api.Controllers;
 public class FizzBuzzController : ControllerBase
 {
     private readonly InputProcessorService _processorService;
+    private readonly ILogger<FizzBuzzController> _logger;
 
-    public FizzBuzzController(InputProcessorService processorService)
+    public FizzBuzzController(InputProcessorService processorService, ILogger<FizzBuzzController> logger)
     {
         _processorService = processorService;
+        _logger = logger;
     }
 
     [HttpGet("{number}")]
     public ActionResult<FizzBuzzResponse> Convert(int number)
     {
+        _logger.LogInformation("GET /api/fizzbuzz/{Number} request received", number);
+
         var model = _processorService.ProcessSingleNumber(number);
 
         if (!model.IsSuccess)
         {
+            _logger.LogWarning("Validation failed for number {Number}: {ValidationResult}",
+                number, model.ValidationResult);
             return BadRequest(new ErrorResponse { Error = model.GetErrorMessage() });
         }
 
@@ -32,10 +38,14 @@ public class FizzBuzzController : ControllerBase
     [HttpPost]
     public ActionResult<FizzBuzzBatchResponse> ConvertBatch([FromBody] FizzBuzzBatchRequest request)
     {
+        _logger.LogInformation("POST /api/fizzbuzz request received with {Count} numbers",
+            request?.Numbers?.Length ?? 0);
+
         var model = _processorService.ProcessBatch(request?.Numbers);
 
         if (!model.IsSuccess)
         {
+            _logger.LogWarning("Batch validation failed: {ValidationResult}", model.ValidationResult);
             return BadRequest(new ErrorResponse { Error = model.GetErrorMessage() });
         }
 

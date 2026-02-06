@@ -6,6 +6,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddScoped<FizzBuzzConverterService>();
 builder.Services.AddScoped<InputValidator>();
+builder.Services.AddScoped<InputProcessorService>();
 
 builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi

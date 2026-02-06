@@ -1,6 +1,7 @@
 ﻿using FizzBuzz.Models;
 using FizzBuzz.Services;
 using FizzBuzz.Validators;
+using Microsoft.Extensions.Logging;
 using Moq;  
 
 namespace FizzBuzz.Tests;
@@ -9,17 +10,20 @@ public class MockInputProcessorService
 {
     private Mock<InputValidator> _mockValidator;
     private Mock<FizzBuzzConverterService> _mockFizzBuzzConverterService;
+    private Mock<ILogger<InputProcessorService>> _mockLogger;
     private InputProcessorService _processor;
 
     [SetUp]
     public void Setup()
-    {   
+    {
         _mockValidator = new Mock<InputValidator>();
         _mockFizzBuzzConverterService = new Mock<FizzBuzzConverterService>();
+        _mockLogger = new Mock<ILogger<InputProcessorService>>();
 
         _processor = new InputProcessorService(
             _mockValidator.Object,
-            _mockFizzBuzzConverterService.Object
+            _mockFizzBuzzConverterService.Object,
+            _mockLogger.Object
         );
     }
     [Test]

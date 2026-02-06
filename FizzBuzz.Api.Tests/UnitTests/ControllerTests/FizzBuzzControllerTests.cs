@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using Moq;
 using FizzBuzz.Api.Controllers;
 using FizzBuzz.Api.Models;
@@ -12,13 +13,15 @@ namespace FizzBuzz.Api.Tests.UnitTests.ControllerTests;
 public class FizzBuzzControllerTests
 {
     private Mock<InputProcessorService> _mockProcessorService;
+    private Mock<ILogger<FizzBuzzController>> _mockLogger;
     private FizzBuzzController _controller;
 
     [SetUp]
     public void Setup()
     {
-        _mockProcessorService = new Mock<InputProcessorService>(null!, null!);
-        _controller = new FizzBuzzController(_mockProcessorService.Object);
+        _mockProcessorService = new Mock<InputProcessorService>(null!, null!, null!);
+        _mockLogger = new Mock<ILogger<FizzBuzzController>>();
+        _controller = new FizzBuzzController(_mockProcessorService.Object, _mockLogger.Object);
     }
 
     [Test]

@@ -1,6 +1,7 @@
 ﻿using FizzBuzz.Models;
 using FizzBuzz.Services;
 using FizzBuzz.Validators;
+using Microsoft.Extensions.Logging;
 
 namespace FizzBuzz.Program;
 
@@ -11,9 +12,16 @@ public class FizzBuzzApp
         Console.WriteLine("Please enter 5 numbers separated by commas between 1-100 (e.g., 3,15,7,20,5):");
         string? input = Console.ReadLine();
 
+        using var loggerFactory = LoggerFactory.Create(builder =>
+        {
+            builder.AddConsole();
+            builder.SetMinimumLevel(LogLevel.Warning);
+        });
+
         InputValidator validator = new InputValidator();
         FizzBuzzConverterService converter = new FizzBuzzConverterService();
-        InputProcessorService processor = new InputProcessorService(validator, converter);
+        var logger = loggerFactory.CreateLogger<InputProcessorService>();
+        InputProcessorService processor = new InputProcessorService(validator, converter, logger);
 
         FizzBuzzModel result = processor.ProcessNumberString(input);
 
