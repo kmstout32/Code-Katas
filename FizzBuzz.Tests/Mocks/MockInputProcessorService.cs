@@ -34,7 +34,7 @@ public class MockInputProcessorService
             .Setup(converter => converter.Convert(It.IsAny<int>()))
             .Returns((int n) => n.ToString());
 
-        FizzBuzzModel result = _processor.ProcessUserInput("any input");
+        FizzBuzzModel result = _processor.ProcessNumberString("any input");
 
         _mockValidator
             .Verify(validator => validator.Validate(It.IsAny<string>(), out expectedNumbers), Times.Once);
@@ -60,7 +60,7 @@ public class MockInputProcessorService
             .Setup(validator => validator.Validate(It.IsAny<string>(), out expectedNumbers))
             .Returns(expectedValidationResult);
 
-            FizzBuzzModel result = _processor.ProcessUserInput(input);
+            FizzBuzzModel result = _processor.ProcessNumberString(input);
 
         _mockValidator
             .Verify(validator => validator.Validate(It.IsAny<string>(), out expectedNumbers), Times.Once);

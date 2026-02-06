@@ -27,9 +27,4 @@ public class FizzBuzzConverterService
 
         return result;
     }
-
-    public virtual List<string> ConvertBatch(List<int> numbers)
-    {
-        return numbers.Select(n => Convert(n)).ToList();
-    }
 }

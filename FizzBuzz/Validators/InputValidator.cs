@@ -2,6 +2,10 @@ namespace FizzBuzz.Validators;
 
 public class InputValidator
 {
+    public const int MIN_VALUE = 1;
+    public const int MAX_VALUE = 100;
+    public const int REQUIRED_BATCH_SIZE = 5;
+
     public enum ValidationResult
     {
         Success,
@@ -13,35 +17,9 @@ public class InputValidator
 
     public virtual ValidationResult ValidateSingle(int number)
     {
-        if (number < 1 || number > 100)
+        if (number < MIN_VALUE || number > MAX_VALUE)
         {
             return ValidationResult.OutOfRange;
-        }
-
-        return ValidationResult.Success;
-    }
-
-    public virtual ValidationResult Validate(int[]? numbers, out List<int> validatedNumbers)
-    {
-        validatedNumbers = new List<int>();
-
-        if (numbers == null || numbers.Length == 0)
-        {
-            return ValidationResult.NoInput;
-        }
-
-        if (numbers.Length != 5)
-        {
-            return ValidationResult.WrongCount;
-        }
-
-        foreach (int number in numbers)
-        {
-            if (number < 1 || number > 100)
-            {
-                return ValidationResult.OutOfRange;
-            }
-            validatedNumbers.Add(number);
         }
 
         return ValidationResult.Success;
@@ -58,7 +36,7 @@ public class InputValidator
 
         string[] numberStrings = input.Split(',');
 
-        if (numberStrings.Length != 5)
+        if (numberStrings.Length != REQUIRED_BATCH_SIZE)
         {
             return ValidationResult.WrongCount;
         }
@@ -79,7 +57,7 @@ public class InputValidator
 
         foreach (int number in numbers)
         {
-            if (number < 1 || number > 100)
+            if (number < MIN_VALUE || number > MAX_VALUE)
             {
                 return ValidationResult.OutOfRange;
             }

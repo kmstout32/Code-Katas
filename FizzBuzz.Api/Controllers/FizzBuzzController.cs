@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
 using FizzBuzz.Services;
-using FizzBuzz.Validators;
 using FizzBuzz.Models;
 using FizzBuzz.Api.Models;
 
@@ -10,56 +9,40 @@ namespace FizzBuzz.Api.Controllers;
 [Route("api/[controller]")]
 public class FizzBuzzController : ControllerBase
 {
-    private readonly FizzBuzzConverterService _converterService;
-    private readonly InputValidator _inputValidator;
-    private readonly ILogger<FizzBuzzController> _logger;
+    private readonly InputProcessorService _processorService;
 
-    public FizzBuzzController(
-        FizzBuzzConverterService converterService,
-        InputValidator inputValidator,
-        ILogger<FizzBuzzController> logger)
+    public FizzBuzzController(InputProcessorService processorService)
     {
-        _converterService = converterService;
-        _inputValidator = inputValidator;
-        _logger = logger;
+        _processorService = processorService;
     }
 
     [HttpGet("{number}")]
     public ActionResult<FizzBuzzResponse> Convert(int number)
     {
-        var validationResult = _inputValidator.ValidateSingle(number);
+        var model = _processorService.ProcessSingleNumber(number);
 
-        if (validationResult != InputValidator.ValidationResult.Success)
+        if (!model.IsSuccess)
         {
-            _logger.LogWarning("Validation failed for single number: {Number}, Result: {ValidationResult}",
-                number, validationResult);
-            var model = new FizzBuzzModel { ValidationResult = validationResult };
             return BadRequest(new ErrorResponse { Error = model.GetErrorMessage() });
         }
 
-        string result = _converterService.Convert(number);
-        return Ok(new FizzBuzzResponse { Number = number, Result = result });
+        return Ok(new FizzBuzzResponse { Number = number, Result = model.ConvertedResults[0] });
     }
 
     [HttpPost]
     public ActionResult<FizzBuzzBatchResponse> ConvertBatch([FromBody] FizzBuzzBatchRequest request)
     {
-        var validationResult = _inputValidator.Validate(request?.Numbers, out List<int> validatedNumbers);
+        var model = _processorService.ProcessBatch(request?.Numbers);
 
-        if (validationResult != InputValidator.ValidationResult.Success)
+        if (!model.IsSuccess)
         {
-            _logger.LogWarning("Validation failed for batch request: Result: {ValidationResult}, Count: {Count}",
-                validationResult, request?.Numbers?.Length ?? 0);
-            var model = new FizzBuzzModel { ValidationResult = validationResult };
             return BadRequest(new ErrorResponse { Error = model.GetErrorMessage() });
         }
 
-        var convertedResults = _converterService.ConvertBatch(validatedNumbers);
-        var results = validatedNumbers.Zip(convertedResults, (num, result) => new FizzBuzzResult
+        var results = model.Numbers.Zip(model.ConvertedResults, (num, result) => new FizzBuzzResult
         {
             Number = num,
-            Result = result,
-            Error = null
+            Result = result
         }).ToList();
 
         return Ok(new FizzBuzzBatchResponse { Results = results });

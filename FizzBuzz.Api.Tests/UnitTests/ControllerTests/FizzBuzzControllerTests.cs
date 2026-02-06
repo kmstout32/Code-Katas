@@ -1,9 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using Moq;
 using FizzBuzz.Api.Controllers;
 using FizzBuzz.Api.Models;
 using FizzBuzz.Services;
+using FizzBuzz.Models;
 using FizzBuzz.Validators;
 
 namespace FizzBuzz.Api.Tests.UnitTests.ControllerTests;
@@ -11,29 +11,26 @@ namespace FizzBuzz.Api.Tests.UnitTests.ControllerTests;
 [TestFixture]
 public class FizzBuzzControllerTests
 {
-    private Mock<FizzBuzzConverterService> _mockConverterService;
-    private Mock<InputValidator> _mockValidator;
-    private Mock<ILogger<FizzBuzzController>> _mockLogger;
+    private Mock<InputProcessorService> _mockProcessorService;
     private FizzBuzzController _controller;
 
     [SetUp]
     public void Setup()
     {
-        _mockConverterService = new Mock<FizzBuzzConverterService>();
-        _mockValidator = new Mock<InputValidator>();
-        _mockLogger = new Mock<ILogger<FizzBuzzController>>();
-        _controller = new FizzBuzzController(
-            _mockConverterService.Object,
-            _mockValidator.Object,
-            _mockLogger.Object);
+        _mockProcessorService = new Mock<InputProcessorService>(null!, null!);
+        _controller = new FizzBuzzController(_mockProcessorService.Object);
     }
 
     [Test]
     public void Convert_ValidNumber_ReturnsOkResult()
     {
-        _mockValidator.Setup(v => v.ValidateSingle(15))
-            .Returns(InputValidator.ValidationResult.Success);
-        _mockConverterService.Setup(c => c.Convert(15)).Returns("FizzBuzz");
+        var model = new FizzBuzzModel
+        {
+            ValidationResult = InputValidator.ValidationResult.Success,
+            Numbers = new List<int> { 15 },
+            ConvertedResults = new List<string> { "FizzBuzz" }
+        };
+        _mockProcessorService.Setup(p => p.ProcessSingleNumber(15)).Returns(model);
 
         var response = (_controller.Convert(15).Result as OkObjectResult)!.Value as FizzBuzzResponse;
 
@@ -46,8 +43,11 @@ public class FizzBuzzControllerTests
     [Test]
     public void Convert_InvalidNumber_Returns_BadRequest(int number)
     {
-        _mockValidator.Setup(v => v.ValidateSingle(number))
-            .Returns(InputValidator.ValidationResult.OutOfRange);
+        var model = new FizzBuzzModel
+        {
+            ValidationResult = InputValidator.ValidationResult.OutOfRange
+        };
+        _mockProcessorService.Setup(p => p.ProcessSingleNumber(number)).Returns(model);
 
         Assert.That(_controller.Convert(number).Result, Is.InstanceOf<BadRequestObjectResult>());
     }
@@ -55,11 +55,13 @@ public class FizzBuzzControllerTests
     [Test]
     public void ConvertBatch_ValidNumbers_Returns_OkResult()
     {
-        var validatedNumbers = new List<int> { 1, 3, 5, 15, 30 };
-        _mockValidator.Setup(v => v.Validate(It.IsAny<int[]>(), out validatedNumbers))
-            .Returns(InputValidator.ValidationResult.Success);
-        _mockConverterService.Setup(c => c.ConvertBatch(It.IsAny<List<int>>()))
-            .Returns(new List<string> { "1", "Fizz", "Buzz", "FizzBuzz", "FizzBuzz" });
+        var model = new FizzBuzzModel
+        {
+            ValidationResult = InputValidator.ValidationResult.Success,
+            Numbers = new List<int> { 1, 3, 5, 15, 30 },
+            ConvertedResults = new List<string> { "1", "Fizz", "Buzz", "FizzBuzz", "FizzBuzz" }
+        };
+        _mockProcessorService.Setup(p => p.ProcessBatch(It.IsAny<int[]>())).Returns(model);
 
         var response = (_controller.ConvertBatch(new FizzBuzzBatchRequest { Numbers = new[] { 1, 3, 5, 15, 30 } })
             .Result as OkObjectResult)!.Value as FizzBuzzBatchResponse;
@@ -71,19 +73,23 @@ public class FizzBuzzControllerTests
     [Test]
     public void ConvertBatch_NullRequest_Returns_BadRequest()
     {
-        var emptyList = new List<int>();
-        _mockValidator.Setup(v => v.Validate(It.IsAny<int[]>(), out emptyList))
-            .Returns(InputValidator.ValidationResult.NoInput);
+        var model = new FizzBuzzModel
+        {
+            ValidationResult = InputValidator.ValidationResult.NoInput
+        };
+        _mockProcessorService.Setup(p => p.ProcessBatch(It.IsAny<int[]>())).Returns(model);
 
-        Assert.That(_controller.ConvertBatch(null).Result, Is.InstanceOf<BadRequestObjectResult>());
+        Assert.That(_controller.ConvertBatch(null!).Result, Is.InstanceOf<BadRequestObjectResult>());
     }
 
     [Test]
     public void ConvertBatch_EmptyArray_Returns_BadRequest()
     {
-        var emptyList = new List<int>();
-        _mockValidator.Setup(v => v.Validate(It.IsAny<int[]>(), out emptyList))
-            .Returns(InputValidator.ValidationResult.NoInput);
+        var model = new FizzBuzzModel
+        {
+            ValidationResult = InputValidator.ValidationResult.NoInput
+        };
+        _mockProcessorService.Setup(p => p.ProcessBatch(It.IsAny<int[]>())).Returns(model);
 
         Assert.That(_controller.ConvertBatch(new FizzBuzzBatchRequest { Numbers = Array.Empty<int>() })
             .Result, Is.InstanceOf<BadRequestObjectResult>());
@@ -92,9 +98,11 @@ public class FizzBuzzControllerTests
     [Test]
     public void ConvertBatch_WrongCount_Returns_BadRequest()
     {
-        var emptyList = new List<int>();
-        _mockValidator.Setup(v => v.Validate(It.IsAny<int[]>(), out emptyList))
-            .Returns(InputValidator.ValidationResult.WrongCount);
+        var model = new FizzBuzzModel
+        {
+            ValidationResult = InputValidator.ValidationResult.WrongCount
+        };
+        _mockProcessorService.Setup(p => p.ProcessBatch(It.IsAny<int[]>())).Returns(model);
 
         Assert.That(_controller.ConvertBatch(new FizzBuzzBatchRequest { Numbers = new[] { 1, 2, 3 } })
             .Result, Is.InstanceOf<BadRequestObjectResult>());
@@ -103,9 +111,11 @@ public class FizzBuzzControllerTests
     [Test]
     public void ConvertBatch_OutOfRange_Returns_BadRequest()
     {
-        var emptyList = new List<int>();
-        _mockValidator.Setup(v => v.Validate(It.IsAny<int[]>(), out emptyList))
-            .Returns(InputValidator.ValidationResult.OutOfRange);
+        var model = new FizzBuzzModel
+        {
+            ValidationResult = InputValidator.ValidationResult.OutOfRange
+        };
+        _mockProcessorService.Setup(p => p.ProcessBatch(It.IsAny<int[]>())).Returns(model);
 
         Assert.That(_controller.ConvertBatch(new FizzBuzzBatchRequest { Numbers = new[] { 1, 2, 3, 4, 150 } })
             .Result, Is.InstanceOf<BadRequestObjectResult>());

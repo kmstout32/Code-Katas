@@ -15,7 +15,29 @@ public class InputProcessorService
         _converter = converter;
     }
 
-    public virtual FizzBuzzModel ProcessUserInput(string? input)
+    public virtual FizzBuzzModel ProcessSingleNumber(int number)
+    {
+        FizzBuzzModel model = new FizzBuzzModel();
+        model.ValidationResult = _validator.ValidateSingle(number);
+
+        if (model.IsSuccess)
+        {
+            model.Numbers.Add(number);
+            model.ConvertedResults.Add(_converter.Convert(number));
+        }
+
+        return model;
+    }
+
+    public virtual FizzBuzzModel ProcessBatch(int[]? numbers)
+    {
+        string input = numbers != null && numbers.Length > 0
+            ? string.Join(",", numbers)
+            : string.Empty;
+        return ProcessNumberString(input);
+    }
+
+    public virtual FizzBuzzModel ProcessNumberString(string? input)
     {
         FizzBuzzModel model = new FizzBuzzModel();
         model.ValidationResult = _validator.Validate(input, out List<int> numbers);

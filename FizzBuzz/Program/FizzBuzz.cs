@@ -15,7 +15,7 @@ public class FizzBuzzApp
         FizzBuzzConverterService converter = new FizzBuzzConverterService();
         InputProcessorService processor = new InputProcessorService(validator, converter);
 
-        FizzBuzzModel result = processor.ProcessUserInput(input);
+        FizzBuzzModel result = processor.ProcessNumberString(input);
 
         if (result.IsSuccess)
         {
